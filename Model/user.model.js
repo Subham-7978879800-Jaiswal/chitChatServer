@@ -24,7 +24,7 @@ const UserSchema = new mongoose.Schema({
   },
 });
 
-const userModel = mongoose.model("Users", UserSchema);
+const userModel = mongoose.model("users", UserSchema);
 
 const checkUserExistInDB = async (emailId, getPassword) => {
   try {
