@@ -23,7 +23,7 @@ const httpLogin = async (req, res) => {
         .send({ success: false, errorMessage: "Incorrect Password" });
       return;
     }
-    payload = { emailId: user.emailId };
+    payload = { emailId: user.emailId,_id:user._id };
     const token = await createJWTToken(payload);
 
     res.cookie(`jwt-token`, token, {

@@ -33,12 +33,14 @@ const checkUserExistInDB = async (emailId, getPassword) => {
     if (!user) {
       return { success: false, errorMessage: "user Doesnt exist" };
     }
+    
     return {
       success: true,
       document: {
         name,
         emailId: emailAddress,
         password: getPassword ? password : null,
+        _id: user._id.valueOf(),
       },
     };
   } catch (err) {
@@ -68,7 +70,7 @@ const createUserInDB = async (name, emailId, password) => {
 
 const getAllUserExceptCurrentUserDB = async (emailId) => {
   try {
-    const projection = { _id: 0, password: 0, __v: 0 };
+    const projection = { _id: 1, password: 0, __v: 0 };
     const users = await userModel
       .find({
         emailId: { $ne: emailId },
@@ -89,10 +91,11 @@ const getAllUserExceptCurrentUserDB = async (emailId) => {
   }
 };
 
-const createJWTToken = async ({ emailId }) => {
+const createJWTToken = async ({ emailId,_id }) => {
   return await jwt.sign(
     {
       emailId: emailId,
+      _id:_id
     },
     JWT_SECRET_STRING,
     { expiresIn: "24h" }

@@ -11,7 +11,7 @@ const Authorization = async (request, response, next) => {
 
     // pass the user down to the endpoints here
     request.emailId = user.emailId;
-
+    request._id = user._id;
     // pass down functionality to the endpoint
     next();
   } catch (error) {

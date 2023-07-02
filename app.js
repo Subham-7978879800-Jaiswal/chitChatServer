@@ -4,6 +4,7 @@ const helmet = require("helmet");
 const { run } = require("./db");
 
 const { userRouter } = require("./Routes/user");
+const { chatRouter } = require("./Routes/chat");
 require("dotenv").config();
 
 const app = express();
@@ -14,6 +15,7 @@ app.use(cors({ credentials: true, origin: FE_URL }));
 app.use(helmet());
 app.use(express.json());
 app.use("/users", userRouter);
+app.use("/chat", chatRouter);
 
 const { port } = process.env || 4000;
 
