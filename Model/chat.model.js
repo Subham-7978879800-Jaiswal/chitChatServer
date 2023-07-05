@@ -52,8 +52,7 @@ const createChat = async (id, members, lastMessage, unreadMessages) => {
     });
     const newCreatedChat = await (await createdChat.save()).populate("members");
     const newCreatedChatWithMemData = await newCreatedChat.populate("members");
-    // const { chats } = await getAllChatForUser(id);
-    // const chatData = await newCreatedChat.chat.populate("members");
+    
     return {
       success: true,
       message: "Chat Created :)",

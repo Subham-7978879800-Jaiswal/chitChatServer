@@ -5,6 +5,7 @@ const { run } = require("./db");
 
 const { userRouter } = require("./Routes/user");
 const { chatRouter } = require("./Routes/chat");
+const { messagesRouter } = require("./Routes/messages");
 require("dotenv").config();
 
 const app = express();
@@ -16,6 +17,7 @@ app.use(helmet());
 app.use(express.json());
 app.use("/users", userRouter);
 app.use("/chat", chatRouter);
+app.use("/messages", messagesRouter);
 
 const { port } = process.env || 4000;
 
