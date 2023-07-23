@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-
+const { chatModel } = require("./chat.model");
 const messageSchema = new mongoose.Schema(
   {
     chatId: {
@@ -50,6 +50,13 @@ const createMessage = async (chatId, senderId, text) => {
   try {
     const newMessage = new messageModel({ chatId, senderId, text });
     const message = await newMessage.save();
+     await chatModel.findOneAndUpdate(
+       { _id: chatId },
+       {
+         lastMessage: message._id,
+         $inc: { unreadMessages: 1 },
+       }
+     );
     return { success: true, message };
   } catch (err) {
     return {

@@ -36,6 +36,7 @@ const getAllChatForUser = async (id) => {
     const allChats = await chatModel
       .find({ members: { $in: [id] } })
       .populate("members")
+      .populate("lastMessage")
       .select(projection);
     return { success: true, chats: allChats };
   } catch (err) {
@@ -52,7 +53,7 @@ const createChat = async (id, members, lastMessage, unreadMessages) => {
     });
     const newCreatedChat = await (await createdChat.save()).populate("members");
     const newCreatedChatWithMemData = await newCreatedChat.populate("members");
-    
+
     return {
       success: true,
       message: "Chat Created :)",
@@ -63,4 +64,4 @@ const createChat = async (id, members, lastMessage, unreadMessages) => {
   }
 };
 
-module.exports = { createChat, getAllChatForUser };
+module.exports = { createChat, getAllChatForUser, chatModel };
